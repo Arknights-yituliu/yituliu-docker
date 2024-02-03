@@ -4,6 +4,8 @@ services:
   frontend:
     build:
       dockerfile: Dockerfile-frontend
+    depends_on:
+      - backend
     ports:
       - "3000:3000"
     networks:
@@ -12,14 +14,19 @@ services:
   backend:
     build:
       dockerfile: Dockerfile-backend
+    depends_on:
+      - database
+      - cache
     networks:
       - front-tier
       - back-tier
+    restart: on-failure
 
   database:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: replace-this-password
+      MYSQL_ROOT_HOST: "%"
       MYSQL_DATABASE: yituliu
     volumes:
       - ./BackEndV3/docs/sql:/docker-entrypoint-initdb.d
