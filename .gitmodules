@@ -1,0 +1,6 @@
+[submodule "BackEndV3"]
+	path = BackEndV3
+	url = https://github.com/Arknights-yituliu/BackEndV3
+[submodule "frontend-v2-plus"]
+	path = frontend-v2-plus
+	url = https://github.com/Arknights-yituliu/frontend-v2-plus
