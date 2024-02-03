@@ -1,0 +1,36 @@
+name: yituliu
+
+services:
+  frontend:
+    build:
+      dockerfile: Dockerfile-frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - front-tier
+
+  backend:
+    build:
+      dockerfile: Dockerfile-backend
+    networks:
+      - front-tier
+      - back-tier
+
+  database:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: replace-this-password
+      MYSQL_DATABASE: yituliu
+    volumes:
+      - ./BackEndV3/docs/sql:/docker-entrypoint-initdb.d
+    networks:
+      - back-tier
+
+  cache:
+    image: redis:latest
+    networks:
+      - back-tier
+
+networks:
+  front-tier: {}
+  back-tier: {}

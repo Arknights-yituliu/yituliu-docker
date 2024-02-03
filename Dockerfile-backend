@@ -1,0 +1,15 @@
+FROM openjdk:17-slim AS build
+
+WORKDIR /app
+
+COPY ./BackEndV3 .
+
+RUN chmod +x ./mvnw
+RUN ./mvnw clean package
+
+FROM openjdk:17-slim
+
+COPY --from=build /app/target/*.jar /app.jar
+COPY application-compose.yml /application-compose.yml
+
+CMD ["java", "-jar", "/app.jar", "--spring.profiles.active=test,compose"]

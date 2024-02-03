@@ -1,0 +1,10 @@
+FROM node:lts-alpine
+
+WORKDIR /app
+
+COPY ./frontend-v2-plus .
+COPY ./baseURL.js ./src/api
+RUN npm ci
+RUN npm run build
+
+CMD ["npm", "run", "server:prod"]
